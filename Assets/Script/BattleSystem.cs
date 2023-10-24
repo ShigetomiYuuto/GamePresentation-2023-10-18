@@ -22,7 +22,7 @@ public class BattleSystem : MonoBehaviour
     {
         if (_targets.Count > 0)
         {
-            ChackDistance();
+            CheckDistance();
         }
     }
 
@@ -38,7 +38,7 @@ public class BattleSystem : MonoBehaviour
             _targets.Remove(other.gameObject);
     }
 
-    void ChackDistance()
+    void CheckDistance()
     {
         foreach (var target in _targets)
         {
