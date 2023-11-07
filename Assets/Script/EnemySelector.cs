@@ -7,10 +7,11 @@ public class EnemySelector : MonoBehaviour
     [SerializeField] List<GameObject> _selectEnemy = new List<GameObject>();
     [SerializeField] BattleSystem _battleSys;
     [SerializeField] GameObject _point;
+    Transform _transform;
     int _enemyIndex = default;
     void Start()
     {
-
+        _transform.GetChild(1).GetComponent<MeshRenderer>();
     }
     void Update()
     {
@@ -24,7 +25,7 @@ public class EnemySelector : MonoBehaviour
     {
         if (context.started)
         {
-            Instantiate(_point, _selectEnemy[_enemyIndex].transform.position, Quaternion.identity);
+           // _transform.gameObject.SetActive(true);
             _enemyIndex++;
             Debug.Log(_enemyIndex);
         }

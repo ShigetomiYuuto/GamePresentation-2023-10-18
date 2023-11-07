@@ -230,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _selectEnemy: []
   _battleSys: {fileID: 1324654428}
+  _point: {fileID: 6177187049498458630, guid: a52e0544737a0644fbe0448e3966b24d, type: 3}
 --- !u!4 &391552552
 Transform:
   m_ObjectHideFlags: 0
@@ -733,7 +734,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.7063264, y: 1, z: -6.894169}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -964,6 +965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movePower: 5
+  _jumpPower: 3
   _moveInput: {x: 0, y: 0, z: 0}
 --- !u!54 &943940465
 Rigidbody:
@@ -1039,13 +1041,53 @@ MonoBehaviour:
     m_ActionId: eed21195-3dc0-4dcb-89af-14703519e84d
     m_ActionName: UI/Selector[/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 391552551}
+        m_TargetAssemblyTypeName: EnemySelector, Assembly-CSharp
+        m_MethodName: OnSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 0419e754-0f98-4bdf-85c6-b1823d521b1e
     m_ActionName: Player/LeftEnemySelector[/Keyboard/q]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 391552551}
+        m_TargetAssemblyTypeName: EnemySelector, Assembly-CSharp
+        m_MethodName: OnSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 5ede81f4-62b5-4e9b-9fe5-e18d8a0c76ae
     m_ActionName: Player/RightEnemySelector[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 943940464}
+        m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 86cc3f2e-b2c7-4766-a052-d8b8e0d94b45
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1285,7 +1327,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1083131949}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7063264, y: 1, z: -1.55}
+  m_LocalPosition: {x: -1.7, y: 1, z: -1.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
