@@ -1,36 +1,90 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class EnemySelector : MonoBehaviour
 {
     [SerializeField] List<GameObject> _selectEnemy = new List<GameObject>();
-    [SerializeField] BattleSystem _battleSys;
-    [SerializeField] GameObject _point;
-    Transform _transform;
+    [SerializeField] GameObject _enemyPoint;
+
     int _enemyIndex = default;
+
+    public event Action UpDateEnemySelect;
+
     void Start()
     {
-        _transform.GetChild(1).GetComponent<MeshRenderer>();
+        InvokeRepeating("RepitingSort", 0.5f, 1f);
     }
-    void Update()
+    void RepitingSort()
     {
-        _selectEnemy = 
-            (_battleSys != null) ? 
-            _battleSys._targets.SortGameobjectByDistance(GameObject.FindGameObjectWithTag("Player").transform)
-            : throw new System.Exception("Attach The Battle System Component");
+        if (_selectEnemy != null)
+        {
+            Debug.Log(_selectEnemy);
+            _selectEnemy = _selectEnemy.OrderBy(e => Vector3.Distance(transform.position, e.transform.position)).ToList();
+            UpDateEnemySelect?.Invoke();
+        }
     }
 
     public void OnSelect(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-           // _transform.gameObject.SetActive(true);
-            _enemyIndex++;
-            Debug.Log(_enemyIndex);
+            if (_enemyIndex < _selectEnemy.Count - 1)
+            {
+                _enemyIndex++;
+                Debug.Log(_enemyIndex);
+            }
+            else
+            {
+                _enemyIndex = 0;
+            }
+            _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
         }
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+            _selectEnemy.Add(other.gameObject);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+            _selectEnemy.Remove(other.gameObject);
+    }
+
+    public List<GameObject> GetSelectEnemys()
+    {
+        return _selectEnemy;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public static class ExtensionMethods
 {
     /* - ägí£ÉÅÉ\ÉbÉh - */
@@ -49,4 +103,5 @@ public static class ExtensionMethods
         }
         return go;
     }
+
 }

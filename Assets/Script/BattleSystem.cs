@@ -1,46 +1,40 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BattleSystem : MonoBehaviour
 {
-    [SerializeField] GameObject _player;
     [SerializeField] float _attackDistance;
+    [SerializeField] EnemySelector _enemySelector;
 
-    public List<GameObject> _targets = new List<GameObject>();
     public List<GameObject> _attackTargets = new List<GameObject>();
-    bool _isCanAttack;
 
     //ƒ_ƒ[ƒW:Šî–{ƒ_ƒ[ƒW*æŽZ”{—¦—v‘f*(1+‰ÁŽZ”{—¦—v‘f)
     //—^ƒ_ƒ[ƒW	(•ŠíˆÐ—Í+—Í)*ƒA[ƒcˆÐ—Í
 
-    void Start()
+    private void OnEnable()
     {
-
+        _enemySelector.UpDateEnemySelect += CheckDistance;
     }
-
-    void Update()
+    private void OnDisable()
     {
-        if (_targets.Count > 0)
-        {
-            CheckDistance();
-        }
+        _enemySelector.UpDateEnemySelect -= CheckDistance;
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-            _targets.Add(other.gameObject);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-            _targets.Remove(other.gameObject);
-    }
-
     void CheckDistance()
     {
-        foreach (var target in _targets)
+        _attackTargets = _enemySelector.GetSelectEnemys().Where(e => Vector3.Distance(transform.position,e.transform.position) < _attackDistance)
+            .OrderBy(e => Vector3.Distance(transform.position, e.transform.position)).ToList();
+    }
+
+
+
+
+
+
+
+
+    /*
+     *         foreach (var target in _targets)
         {
             if ((_player.transform.position - target.transform.position).sqrMagnitude < _attackDistance * _attackDistance && !_attackTargets.Contains(target))
             {
@@ -52,5 +46,5 @@ public class BattleSystem : MonoBehaviour
                 _attackTargets.Remove(target);
             }
         }
-    }
+    */
 }
