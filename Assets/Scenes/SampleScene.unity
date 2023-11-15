@@ -919,7 +919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movePower: 5
   _jumpPower: 6
-  _movementInput: {x: 0, y: 0, z: 0}
+  _moveInput: {x: 0, y: 0, z: 0}
 --- !u!54 &943940465
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -997,7 +997,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1324654429}
         m_TargetAssemblyTypeName: EnemySelector, Assembly-CSharp
-        m_MethodName: OnSelect
+        m_MethodName: OnLeftSelect
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1011,9 +1011,9 @@ MonoBehaviour:
     m_ActionName: Player/LeftEnemySelector[/Keyboard/q]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1324654429}
         m_TargetAssemblyTypeName: EnemySelector, Assembly-CSharp
-        m_MethodName: OnSelect
+        m_MethodName: OnRightSelect
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

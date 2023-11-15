@@ -8,6 +8,7 @@ public class EnemySelector : MonoBehaviour
 {
     [SerializeField] List<GameObject> _selectEnemy = new List<GameObject>();
     [SerializeField] GameObject _enemyPoint;
+    PlayerInput _pInput;
 
     int _enemyIndex = default;
 
@@ -21,26 +22,47 @@ public class EnemySelector : MonoBehaviour
     {
         if (_selectEnemy != null)
         {
-            Debug.Log(_selectEnemy);
+            // Debug.Log(_selectEnemy);
             _selectEnemy = _selectEnemy.OrderBy(e => Vector3.Distance(transform.position, e.transform.position)).ToList();
             UpDateEnemySelect?.Invoke();
         }
     }
 
-    public void OnSelect(InputAction.CallbackContext context)
+    public void OnRightSelect(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && _selectEnemy.Count != 0)
         {
             if (_enemyIndex < _selectEnemy.Count - 1)
             {
                 _enemyIndex++;
-                Debug.Log(_enemyIndex);
+                _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
+                Debug.Log(_enemyIndex + "if");
             }
             else
             {
                 _enemyIndex = 0;
+                _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
+                Debug.Log(_enemyIndex + "else");
             }
-            _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
+        }
+
+    }
+    public void OnLeftSelect(InputAction.CallbackContext context)
+    {
+        if (context.started && _selectEnemy.Count != 0)
+        {
+            if (_enemyIndex < _selectEnemy.Count - 1)
+            {
+                _enemyIndex = _selectEnemy.Count - 1;
+                _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
+                Debug.Log(_enemyIndex + "else");
+            }
+            else
+            {
+                _enemyIndex--;
+                _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
+                Debug.Log(_enemyIndex + "if");
+            }
         }
 
     }

@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "LeftEnemySelector",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "0419e754-0f98-4bdf-85c6-b1823d521b1e",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "RightEnemySelector",
