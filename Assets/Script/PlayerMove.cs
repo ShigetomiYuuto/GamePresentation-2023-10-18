@@ -6,6 +6,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float _movePower;
     [SerializeField] float _jumpPower;
     [SerializeField] Vector3 _moveInput;
+    bool _isGround = false;
     Rigidbody _rb = default;
 
 
@@ -47,9 +48,26 @@ public class PlayerMove : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && _isGround)
         {
             _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+            _isGround = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            _isGround = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            _isGround = true;
         }
     }
 }

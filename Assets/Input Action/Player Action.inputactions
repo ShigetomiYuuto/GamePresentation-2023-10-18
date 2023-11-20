@@ -15,22 +15,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LeftEnemySelector",
-                    "type": "Button",
-                    "id": "0419e754-0f98-4bdf-85c6-b1823d521b1e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "RightEnemySelector",
-                    "type": "Button",
+                    "name": "EnemySelector",
+                    "type": "Value",
                     "id": "5ede81f4-62b5-4e9b-9fe5-e18d8a0c76ae",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -121,26 +112,37 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "80203cbd-dd34-49cd-a663-c94e40c8eddd",
-                    "path": "<Keyboard>/q",
+                    "name": "1D Axis",
+                    "id": "772fb68a-e236-45dc-b002-41454441203b",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftEnemySelector",
-                    "isComposite": false,
+                    "action": "EnemySelector",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "03e59054-495d-4716-b131-52cda143e23f",
+                    "name": "positive",
+                    "id": "966fca6e-41ef-4900-9609-ba4f0c840909",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RightEnemySelector",
+                    "action": "EnemySelector",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "2d14bb7b-0bd6-4d8c-99b1-e9d73abe2a66",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnemySelector",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

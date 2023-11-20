@@ -8,6 +8,7 @@ public class EnemySelector : MonoBehaviour
 {
     [SerializeField] List<GameObject> _selectEnemy = new List<GameObject>();
     [SerializeField] GameObject _enemyPoint;
+    Transform _transform;
     PlayerInput _pInput;
 
     int _enemyIndex = default;
@@ -17,6 +18,7 @@ public class EnemySelector : MonoBehaviour
     void Start()
     {
         InvokeRepeating("RepitingSort", 0.5f, 1f);
+       // _transform = _enemyPoint.transform;
     }
     void RepitingSort()
     {
@@ -27,45 +29,28 @@ public class EnemySelector : MonoBehaviour
             UpDateEnemySelect?.Invoke();
         }
     }
+   
 
-    public void OnRightSelect(InputAction.CallbackContext context)
+    
+
+    public void OnSelect(InputAction.CallbackContext context)
     {
         if (context.started && _selectEnemy.Count != 0)
         {
-            if (_enemyIndex < _selectEnemy.Count - 1)
-            {
-                _enemyIndex++;
-                _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
-                Debug.Log(_enemyIndex + "if");
-            }
-            else
-            {
-                _enemyIndex = 0;
-                _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
-                Debug.Log(_enemyIndex + "else");
-            }
-        }
+            _enemyIndex = context.ReadValue<float>() > 0 ? _enemyIndex +=1 : _enemyIndex -=1;
 
-    }
-    public void OnLeftSelect(InputAction.CallbackContext context)
-    {
-        if (context.started && _selectEnemy.Count != 0)
-        {
-            if (_enemyIndex < _selectEnemy.Count - 1)
-            {
-                _enemyIndex = _selectEnemy.Count - 1;
-                _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
-                Debug.Log(_enemyIndex + "else");
-            }
-            else
-            {
-                _enemyIndex--;
-                _enemyPoint.transform.position = _selectEnemy[_enemyIndex].transform.position;
-                Debug.Log(_enemyIndex + "if");
-            }
-        }
+            if (_enemyIndex > _selectEnemy.Count - 1) _enemyIndex = 0;
 
+            else if (_enemyIndex < 0) _enemyIndex = _selectEnemy.Count - 1;
+
+            _enemyPoint.transform.position = new Vector3(_selectEnemy[_enemyIndex].transform.position.x, _selectEnemy[_enemyIndex].transform.position.y + 3, _selectEnemy[_enemyIndex].transform.position.z);
+
+            
+            //_transform = _selectEnemy[_enemyIndex].GetComponent<Transform>();
+            //Debug.Log(_transform.position);
+        }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {

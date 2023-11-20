@@ -37,22 +37,13 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""LeftEnemySelector"",
-                    ""type"": ""Button"",
-                    ""id"": ""0419e754-0f98-4bdf-85c6-b1823d521b1e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""RightEnemySelector"",
-                    ""type"": ""Button"",
+                    ""name"": ""EnemySelector"",
+                    ""type"": ""Value"",
                     ""id"": ""5ede81f4-62b5-4e9b-9fe5-e18d8a0c76ae"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Jump"",
@@ -143,26 +134,37 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""80203cbd-dd34-49cd-a663-c94e40c8eddd"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""name"": ""1D Axis"",
+                    ""id"": ""772fb68a-e236-45dc-b002-41454441203b"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LeftEnemySelector"",
-                    ""isComposite"": false,
+                    ""action"": ""EnemySelector"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""03e59054-495d-4716-b131-52cda143e23f"",
+                    ""name"": ""positive"",
+                    ""id"": ""966fca6e-41ef-4900-9609-ba4f0c840909"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RightEnemySelector"",
+                    ""action"": ""EnemySelector"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""2d14bb7b-0bd6-4d8c-99b1-e9d73abe2a66"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnemySelector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -222,8 +224,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_LeftEnemySelector = m_Player.FindAction("LeftEnemySelector", throwIfNotFound: true);
-        m_Player_RightEnemySelector = m_Player.FindAction("RightEnemySelector", throwIfNotFound: true);
+        m_Player_EnemySelector = m_Player.FindAction("EnemySelector", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -290,16 +291,14 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_LeftEnemySelector;
-    private readonly InputAction m_Player_RightEnemySelector;
+    private readonly InputAction m_Player_EnemySelector;
     private readonly InputAction m_Player_Jump;
     public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
         public PlayerActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @LeftEnemySelector => m_Wrapper.m_Player_LeftEnemySelector;
-        public InputAction @RightEnemySelector => m_Wrapper.m_Player_RightEnemySelector;
+        public InputAction @EnemySelector => m_Wrapper.m_Player_EnemySelector;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -313,12 +312,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @LeftEnemySelector.started += instance.OnLeftEnemySelector;
-            @LeftEnemySelector.performed += instance.OnLeftEnemySelector;
-            @LeftEnemySelector.canceled += instance.OnLeftEnemySelector;
-            @RightEnemySelector.started += instance.OnRightEnemySelector;
-            @RightEnemySelector.performed += instance.OnRightEnemySelector;
-            @RightEnemySelector.canceled += instance.OnRightEnemySelector;
+            @EnemySelector.started += instance.OnEnemySelector;
+            @EnemySelector.performed += instance.OnEnemySelector;
+            @EnemySelector.canceled += instance.OnEnemySelector;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -329,12 +325,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @LeftEnemySelector.started -= instance.OnLeftEnemySelector;
-            @LeftEnemySelector.performed -= instance.OnLeftEnemySelector;
-            @LeftEnemySelector.canceled -= instance.OnLeftEnemySelector;
-            @RightEnemySelector.started -= instance.OnRightEnemySelector;
-            @RightEnemySelector.performed -= instance.OnRightEnemySelector;
-            @RightEnemySelector.canceled -= instance.OnRightEnemySelector;
+            @EnemySelector.started -= instance.OnEnemySelector;
+            @EnemySelector.performed -= instance.OnEnemySelector;
+            @EnemySelector.canceled -= instance.OnEnemySelector;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -404,8 +397,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnLeftEnemySelector(InputAction.CallbackContext context);
-        void OnRightEnemySelector(InputAction.CallbackContext context);
+        void OnEnemySelector(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
     }
     public interface IUIActions
