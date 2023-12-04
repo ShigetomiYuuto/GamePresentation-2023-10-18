@@ -18,7 +18,7 @@ public class EnemySelector : MonoBehaviour
     void Start()
     {
         InvokeRepeating("RepitingSort", 0.5f, 1f);
-       // _transform = _enemyPoint.transform;
+        // _transform = _enemyPoint.transform;
     }
     void RepitingSort()
     {
@@ -29,15 +29,12 @@ public class EnemySelector : MonoBehaviour
             UpDateEnemySelect?.Invoke();
         }
     }
-   
-
-    
 
     public void OnSelect(InputAction.CallbackContext context)
     {
         if (context.started && _selectEnemy.Count != 0)
         {
-            _enemyIndex = context.ReadValue<float>() > 0 ? _enemyIndex +=1 : _enemyIndex -=1;
+            _enemyIndex = context.ReadValue<float>() > 0 ? _enemyIndex += 1 : _enemyIndex -= 1;
 
             if (_enemyIndex > _selectEnemy.Count - 1) _enemyIndex = 0;
 
@@ -45,12 +42,11 @@ public class EnemySelector : MonoBehaviour
 
             _enemyPoint.transform.position = new Vector3(_selectEnemy[_enemyIndex].transform.position.x, _selectEnemy[_enemyIndex].transform.position.y + 3, _selectEnemy[_enemyIndex].transform.position.z);
 
-            
+
             //_transform = _selectEnemy[_enemyIndex].GetComponent<Transform>();
             //Debug.Log(_transform.position);
         }
     }
-
 
     private void OnTriggerEnter(Collider other)
     {

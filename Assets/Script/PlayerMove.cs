@@ -6,7 +6,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float _movePower;
     [SerializeField] float _jumpPower;
     [SerializeField] Vector3 _moveInput;
-    bool _isGround = false;
+    [SerializeField] bool _isGround = false;
     Rigidbody _rb = default;
 
 
@@ -50,7 +50,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (context.started && _isGround)
         {
-            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+            _rb.velocity = new Vector3(_rb.velocity.x, _jumpPower, _rb.velocity.z);
             _isGround = false;
         }
     }
