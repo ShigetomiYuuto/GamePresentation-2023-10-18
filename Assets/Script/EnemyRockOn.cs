@@ -4,12 +4,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EnemySelector : MonoBehaviour
+public class EnemyRockOn : MonoBehaviour
 {
     [SerializeField] List<GameObject> _selectEnemy = new List<GameObject>();
     [SerializeField] GameObject _enemyPoint;
-    Transform _transform;
-    PlayerInput _pInput;
 
     int _enemyIndex = default;
 
@@ -18,33 +16,33 @@ public class EnemySelector : MonoBehaviour
     void Start()
     {
         InvokeRepeating("RepitingSort", 0.5f, 1f);
-        // _transform = _enemyPoint.transform;
     }
     void RepitingSort()
     {
         if (_selectEnemy != null)
         {
-            // Debug.Log(_selectEnemy);
             _selectEnemy = _selectEnemy.OrderBy(e => Vector3.Distance(transform.position, e.transform.position)).ToList();
             UpDateEnemySelect?.Invoke();
         }
     }
 
-    public void OnSelect(InputAction.CallbackContext context)
+    public void OnRockOn(InputAction.CallbackContext context)
     {
         if (context.started && _selectEnemy.Count != 0)
         {
             _enemyIndex = context.ReadValue<float>() > 0 ? _enemyIndex += 1 : _enemyIndex -= 1;
 
-            if (_enemyIndex > _selectEnemy.Count - 1) _enemyIndex = 0;
+            if (_enemyIndex > _selectEnemy.Count - 1)
+            {
+                _enemyIndex = 0;
+            }
 
-            else if (_enemyIndex < 0) _enemyIndex = _selectEnemy.Count - 1;
-
-            _enemyPoint.transform.position = new Vector3(_selectEnemy[_enemyIndex].transform.position.x, _selectEnemy[_enemyIndex].transform.position.y + 3, _selectEnemy[_enemyIndex].transform.position.z);
-
-
-            //_transform = _selectEnemy[_enemyIndex].GetComponent<Transform>();
-            //Debug.Log(_transform.position);
+            else if (_enemyIndex < 0)
+            {
+                _enemyIndex = _selectEnemy.Count - 1;
+            }
+            _enemyPoint.transform.position = new Vector3(_selectEnemy[_enemyIndex].transform.position.x, 
+                _selectEnemy[_enemyIndex].transform.position.y + 3, _selectEnemy[_enemyIndex].transform.position.z);
         }
     }
 

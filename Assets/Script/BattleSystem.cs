@@ -5,7 +5,7 @@ using UnityEngine;
 public class BattleSystem : MonoBehaviour
 {
     [SerializeField] float _attackDistance;
-    [SerializeField] EnemySelector _enemySelector;
+    [SerializeField] EnemyRockOn _enemySelector;
 
     public List<GameObject> _attackTargets = new List<GameObject>();
 

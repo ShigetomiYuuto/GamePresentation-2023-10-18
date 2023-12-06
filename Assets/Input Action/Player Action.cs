@@ -37,7 +37,16 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""EnemySelector"",
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""86cc3f2e-b2c7-4766-a052-d8b8e0d94b45"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnemyRockOn"",
                     ""type"": ""Value"",
                     ""id"": ""5ede81f4-62b5-4e9b-9fe5-e18d8a0c76ae"",
                     ""expectedControlType"": ""Axis"",
@@ -46,13 +55,13 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""86cc3f2e-b2c7-4766-a052-d8b8e0d94b45"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Selector"",
+                    ""type"": ""Value"",
+                    ""id"": ""dfe379b3-b035-4978-91b2-be3cd6948a0b"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -140,7 +149,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EnemySelector"",
+                    ""action"": ""EnemyRockOn"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -151,7 +160,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EnemySelector"",
+                    ""action"": ""EnemyRockOn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -162,7 +171,73 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EnemySelector"",
+                    ""action"": ""EnemyRockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""RigthLeft"",
+                    ""id"": ""24540705-0a92-4b0c-b5ec-73088228e126"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""8a13e2b8-9250-4c43-ae0b-46f47a511a47"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""4fcbe7ba-7ffd-40f4-adf6-fe5ba8ba8618"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""UpDown"",
+                    ""id"": ""bef6238c-fdaf-49e4-b7cb-cb4ec4399fb8"",
+                    ""path"": ""1DAxis(minValue=-2,maxValue=2)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a50909ef-c472-4e75-84fb-1aa2d54a89e4"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""3724595c-8db8-47a8-9042-31f9ff1e2177"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -224,8 +299,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_EnemySelector = m_Player.FindAction("EnemySelector", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_EnemyRockOn = m_Player.FindAction("EnemyRockOn", throwIfNotFound: true);
+        m_Player_Selector = m_Player.FindAction("Selector", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Selector = m_UI.FindAction("Selector", throwIfNotFound: true);
@@ -291,15 +367,17 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_EnemySelector;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_EnemyRockOn;
+    private readonly InputAction m_Player_Selector;
     public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
         public PlayerActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @EnemySelector => m_Wrapper.m_Player_EnemySelector;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @EnemyRockOn => m_Wrapper.m_Player_EnemyRockOn;
+        public InputAction @Selector => m_Wrapper.m_Player_Selector;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -312,12 +390,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @EnemySelector.started += instance.OnEnemySelector;
-            @EnemySelector.performed += instance.OnEnemySelector;
-            @EnemySelector.canceled += instance.OnEnemySelector;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @EnemyRockOn.started += instance.OnEnemyRockOn;
+            @EnemyRockOn.performed += instance.OnEnemyRockOn;
+            @EnemyRockOn.canceled += instance.OnEnemyRockOn;
+            @Selector.started += instance.OnSelector;
+            @Selector.performed += instance.OnSelector;
+            @Selector.canceled += instance.OnSelector;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -325,12 +406,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @EnemySelector.started -= instance.OnEnemySelector;
-            @EnemySelector.performed -= instance.OnEnemySelector;
-            @EnemySelector.canceled -= instance.OnEnemySelector;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @EnemyRockOn.started -= instance.OnEnemyRockOn;
+            @EnemyRockOn.performed -= instance.OnEnemyRockOn;
+            @EnemyRockOn.canceled -= instance.OnEnemyRockOn;
+            @Selector.started -= instance.OnSelector;
+            @Selector.performed -= instance.OnSelector;
+            @Selector.canceled -= instance.OnSelector;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -397,8 +481,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnEnemySelector(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnEnemyRockOn(InputAction.CallbackContext context);
+        void OnSelector(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
