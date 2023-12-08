@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Battle",
+                    "type": "Button",
+                    "id": "a576f690-5d23-4053-87ab-f7e70d0f3420",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -156,7 +165,7 @@
                 {
                     "name": "RigthLeft",
                     "id": "24540705-0a92-4b0c-b5ec-73088228e126",
-                    "path": "1DAxis",
+                    "path": "1DAxis(minValue=-2,maxValue=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -189,7 +198,7 @@
                 {
                     "name": "UpDown",
                     "id": "bef6238c-fdaf-49e4-b7cb-cb4ec4399fb8",
-                    "path": "1DAxis(minValue=-2,maxValue=2)",
+                    "path": "1DAxis(minValue=3,maxValue=-3)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -227,6 +236,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d883bd5-0a77-47f3-9bdf-5893818bbbf3",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Battle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

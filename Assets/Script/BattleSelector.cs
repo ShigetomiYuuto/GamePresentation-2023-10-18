@@ -1,22 +1,22 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class BattleSelector : MonoBehaviour
 {
-    [SerializeField] Image[] images = new Image[5];
-    [SerializeField] Color[] SelectColor = new Color[5];
-    [SerializeField] int index = 0;
-    [SerializeField] int colorindex = 0;
+    [SerializeField] Image[] _images = new Image[5];
+    [SerializeField] Color[] _SelectColor = new Color[5];
+    [SerializeField] int _Selectorindex = 0;
+    [SerializeField] int _colorindex = 0;
+    public static bool _enemy = false;
     void Start()
     {
-        for (int i = 0; i < images.Length; i++)
+        for (int i = 0; i < _images.Length; i++)
         {
-            images[i].color = Color.white;
+            _images[i].color = Color.white;
         }
 
-        images[index].color = SelectColor[2];
+        _images[_Selectorindex].color = _SelectColor[2];
     }
 
     //void Update()
@@ -85,67 +85,76 @@ public class BattleSelector : MonoBehaviour
     {
         if (context.started)
         {
-            if (context.ReadValue<float>() == 1)
+            if (context.ReadValue<float>() == 2)
             {
-                if (index != 3)
+                if (_Selectorindex != 3)
                 {
-                    images[index].color = Color.white;
+                   _images[_Selectorindex].color = Color.white;
                 }
-                Debug.Log(index);
-                if (index == 6)
+                Debug.Log(_Selectorindex);
+                if (_Selectorindex == 6)
                 {
-                    index = 0;
+                    _Selectorindex = 0;
                 }
                 else
                 {
-                    index++;
+                    _Selectorindex++;
                 }
-                if (index != 3)
+
+                if (_Selectorindex != 3)
                 {
-                    images[index].color = SelectColor[2];
+                    _images[_Selectorindex].color = _SelectColor[2];
                 }
             }
 
-            else if (context.ReadValue<float>() == -1)
+            else if (context.ReadValue<float>() == -2)
             {
-                if (index != 3)
+                if (_Selectorindex != 3)
                 {
-                    images[index].color = Color.white;
+                    _images[_Selectorindex].color = Color.white;
                 }
-                Debug.Log(index);
-                if (index == 0)
+                Debug.Log(_Selectorindex);
+                if (_Selectorindex == 0)
                 {
-                    index = 6;
+                    _Selectorindex = 6;
                 }
                 else
                 {
-                    index--;
+                    _Selectorindex--;
                 }
-                if (index != 3)
+                if (_Selectorindex != 3)
                 {
-                    images[index].color = SelectColor[2];
+                    _images[_Selectorindex].color = _SelectColor[2];
                 }
             }
 
-            else if (context.ReadValue<float>() == 2 && index == 3)
+            else if (context.ReadValue<float>() == 3 && _Selectorindex == 3)
             {
-                colorindex++;
-                if (colorindex >= SelectColor.Length)
+                _colorindex++;
+                if (_colorindex >= _SelectColor.Length)
                 {
-                    colorindex = 0;
+                    _colorindex = 0;
                 }
-                images[3].color = SelectColor[colorindex];
+                _images[3].color = _SelectColor[_colorindex];
             }
 
-            else if (context.ReadValue<float>() == -2 && index == 3)
+            else if (context.ReadValue<float>() == -3 && _Selectorindex == 3)
             {
-                colorindex--;
-                if (colorindex < 0)
+                _colorindex--;
+                if (_colorindex < 0)
                 {
-                    colorindex = 4;
+                    _colorindex = 4;
                 }
-                images[3].color = SelectColor[colorindex];
+                _images[3].color = _SelectColor[_colorindex];
             }
+        }
+    }
+
+    public void OnSerectDecision(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _enemy = true;
         }
     }
 }

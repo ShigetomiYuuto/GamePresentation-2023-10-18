@@ -62,6 +62,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Battle"",
+                    ""type"": ""Button"",
+                    ""id"": ""a576f690-5d23-4053-87ab-f7e70d0f3420"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -178,7 +187,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""RigthLeft"",
                     ""id"": ""24540705-0a92-4b0c-b5ec-73088228e126"",
-                    ""path"": ""1DAxis"",
+                    ""path"": ""1DAxis(minValue=-2,maxValue=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -211,7 +220,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""UpDown"",
                     ""id"": ""bef6238c-fdaf-49e4-b7cb-cb4ec4399fb8"",
-                    ""path"": ""1DAxis(minValue=-2,maxValue=2)"",
+                    ""path"": ""1DAxis(minValue=3,maxValue=-3)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -249,6 +258,17 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d883bd5-0a77-47f3-9bdf-5893818bbbf3"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Battle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -302,6 +322,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_EnemyRockOn = m_Player.FindAction("EnemyRockOn", throwIfNotFound: true);
         m_Player_Selector = m_Player.FindAction("Selector", throwIfNotFound: true);
+        m_Player_Battle = m_Player.FindAction("Battle", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Selector = m_UI.FindAction("Selector", throwIfNotFound: true);
@@ -370,6 +391,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_EnemyRockOn;
     private readonly InputAction m_Player_Selector;
+    private readonly InputAction m_Player_Battle;
     public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
@@ -378,6 +400,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @EnemyRockOn => m_Wrapper.m_Player_EnemyRockOn;
         public InputAction @Selector => m_Wrapper.m_Player_Selector;
+        public InputAction @Battle => m_Wrapper.m_Player_Battle;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -399,6 +422,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Selector.started += instance.OnSelector;
             @Selector.performed += instance.OnSelector;
             @Selector.canceled += instance.OnSelector;
+            @Battle.started += instance.OnBattle;
+            @Battle.performed += instance.OnBattle;
+            @Battle.canceled += instance.OnBattle;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -415,6 +441,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Selector.started -= instance.OnSelector;
             @Selector.performed -= instance.OnSelector;
             @Selector.canceled -= instance.OnSelector;
+            @Battle.started -= instance.OnBattle;
+            @Battle.performed -= instance.OnBattle;
+            @Battle.canceled -= instance.OnBattle;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -484,6 +513,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnEnemyRockOn(InputAction.CallbackContext context);
         void OnSelector(InputAction.CallbackContext context);
+        void OnBattle(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

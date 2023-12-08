@@ -10,6 +10,8 @@ public class EnemyRockOn : MonoBehaviour
     [SerializeField] GameObject _enemyPoint;
 
     int _enemyIndex = default;
+    public static int _index = default;
+    public staticÅ@bool _active = false;
 
     public event Action UpDateEnemySelect;
 
@@ -28,21 +30,33 @@ public class EnemyRockOn : MonoBehaviour
 
     public void OnRockOn(InputAction.CallbackContext context)
     {
-        if (context.started && _selectEnemy.Count != 0)
+        if (context.started)
         {
-            _enemyIndex = context.ReadValue<float>() > 0 ? _enemyIndex += 1 : _enemyIndex -= 1;
-
-            if (_enemyIndex > _selectEnemy.Count - 1)
+            if (_selectEnemy.Count != 0)
             {
-                _enemyIndex = 0;
-            }
+                _enemyIndex = context.ReadValue<float>() > 0 ? _enemyIndex += 1 : _enemyIndex -= 1;
 
-            else if (_enemyIndex < 0)
-            {
-                _enemyIndex = _selectEnemy.Count - 1;
+                if (_enemyIndex > _selectEnemy.Count - 1)
+                {
+                    _enemyIndex = 0;
+                }
+
+                else if (_enemyIndex < 0)
+                {
+                    _enemyIndex = _selectEnemy.Count - 1;
+                }
+                _enemyPoint.transform.position = new Vector3(_selectEnemy[_enemyIndex].transform.position.x,
+                    _selectEnemy[_enemyIndex].transform.position.y + 3, _selectEnemy[_enemyIndex].transform.position.z);
             }
-            _enemyPoint.transform.position = new Vector3(_selectEnemy[_enemyIndex].transform.position.x, 
-                _selectEnemy[_enemyIndex].transform.position.y + 3, _selectEnemy[_enemyIndex].transform.position.z);
+            _index = _enemyIndex;
+        }
+    }
+
+    private void Update()
+    {
+        if (_selectEnemy.Count != 0 && BattleSelector._enemy)
+        {
+            _active = true;
         }
     }
 
