@@ -7,10 +7,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] float _attackDistance;
     [SerializeField] EnemyRockOn _enemySelector;
 
-    public List<GameObject> _attackTargets = new List<GameObject>();
-
-    //ダメージ:基本ダメージ*乗算倍率要素*(1+加算倍率要素)
-    //与ダメージ	(武器威力+力)*アーツ威力
+    public static List<GameObject> _attackTargets = new List<GameObject>();
 
     private void OnEnable()
     {

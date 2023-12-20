@@ -6,9 +6,9 @@ public class BattleSelector : MonoBehaviour
 {
     [SerializeField] Image[] _images = new Image[5];
     [SerializeField] Color[] _SelectColor = new Color[5];
-    [SerializeField] int _Selectorindex = 0;
+    [SerializeField] int _selectorIndex = 0;
     [SerializeField] int _colorindex = 0;
-    public static bool _enemy = false;
+    public static int _bSenemy = default;
     void Start()
     {
         for (int i = 0; i < _images.Length; i++)
@@ -16,70 +16,8 @@ public class BattleSelector : MonoBehaviour
             _images[i].color = Color.white;
         }
 
-        _images[_Selectorindex].color = _SelectColor[2];
+        _images[_selectorIndex].color = _SelectColor[2];
     }
-
-    //void Update()
-    //{
-    //    var input = Keyboard.current;
-    //    if (input == null) return;
-
-    //    var left = input.leftArrowKey;
-    //    var right = input.rightArrowKey;
-    //    var up = input.upArrowKey;
-    //    var down = input.downArrowKey;
-
-    //    if (up.wasPressedThisFrame && index == 3)
-    //    {
-    //        colorindex++;
-    //        if(colorindex >= SelectColor.Length) 
-    //        {
-    //            colorindex = 0;
-    //        }
-    //        images[3].color = SelectColor[colorindex];
-    //    }
-
-    //    if (down.wasPressedThisFrame  && images[3])
-    //    {
-    //        colorindex--;
-    //        if (colorindex < 0)
-    //        {
-    //            colorindex = 4;
-    //        }
-    //        images[3].color = SelectColor[colorindex];
-    //    }
-
-    //    if (left.wasPressedThisFrame)
-    //    {
-    //        Debug.Log(index);
-    //        images[index].color = Color.white;
-    //        if(index == 0)
-    //        {
-    //            index = 6;
-    //        }
-    //        else
-    //        {
-    //            index--;
-    //        }
-    //        images[index].color = SelectColor[2];
-    //    }
-
-    //    if (right.wasPressedThisFrame)
-    //    {
-    //        Debug.Log(index);
-    //        images[index].color = Color.white;
-    //        if(index == 6)
-    //        {
-    //            index = 0;
-    //        }
-    //        else
-    //        {
-    //            index++;
-    //        }
-
-    //        images[index].color = SelectColor[2];
-    //    }
-    //}
 
     public void OnSelect(InputAction.CallbackContext context)
     {
@@ -87,48 +25,50 @@ public class BattleSelector : MonoBehaviour
         {
             if (context.ReadValue<float>() == 2)
             {
-                if (_Selectorindex != 3)
+                if (_selectorIndex != 3)
                 {
-                   _images[_Selectorindex].color = Color.white;
+                   _images[_selectorIndex].color = Color.white;
                 }
-                Debug.Log(_Selectorindex);
-                if (_Selectorindex == 6)
+                Debug.Log(_selectorIndex);
+                if (_selectorIndex == 6)
                 {
-                    _Selectorindex = 0;
+                    _selectorIndex = 0;
                 }
                 else
                 {
-                    _Selectorindex++;
+                    _selectorIndex++;
                 }
 
-                if (_Selectorindex != 3)
+                if (_selectorIndex != 3)
                 {
-                    _images[_Selectorindex].color = _SelectColor[2];
+                    _images[_selectorIndex].color = _SelectColor[2];
                 }
+                _bSenemy = _selectorIndex;
             }
 
             else if (context.ReadValue<float>() == -2)
             {
-                if (_Selectorindex != 3)
+                if (_selectorIndex != 3)
                 {
-                    _images[_Selectorindex].color = Color.white;
+                    _images[_selectorIndex].color = Color.white;
                 }
-                Debug.Log(_Selectorindex);
-                if (_Selectorindex == 0)
+                Debug.Log(_selectorIndex);
+                if (_selectorIndex == 0)
                 {
-                    _Selectorindex = 6;
+                    _selectorIndex = 6;
                 }
                 else
                 {
-                    _Selectorindex--;
+                    _selectorIndex--;
                 }
-                if (_Selectorindex != 3)
+                if (_selectorIndex != 3)
                 {
-                    _images[_Selectorindex].color = _SelectColor[2];
+                    _images[_selectorIndex].color = _SelectColor[2];
                 }
+                _bSenemy = _selectorIndex;
             }
 
-            else if (context.ReadValue<float>() == 3 && _Selectorindex == 3)
+            else if (context.ReadValue<float>() == 3 && _selectorIndex == 3)
             {
                 _colorindex++;
                 if (_colorindex >= _SelectColor.Length)
@@ -138,7 +78,7 @@ public class BattleSelector : MonoBehaviour
                 _images[3].color = _SelectColor[_colorindex];
             }
 
-            else if (context.ReadValue<float>() == -3 && _Selectorindex == 3)
+            else if (context.ReadValue<float>() == -3 && _selectorIndex == 3)
             {
                 _colorindex--;
                 if (_colorindex < 0)
@@ -152,9 +92,6 @@ public class BattleSelector : MonoBehaviour
 
     public void OnSerectDecision(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
-            _enemy = true;
-        }
+
     }
 }

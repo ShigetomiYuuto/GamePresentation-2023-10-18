@@ -11,7 +11,6 @@ public class EnemyRockOn : MonoBehaviour
 
     int _enemyIndex = default;
     public static int _index = default;
-    public staticÅ@bool _active = false;
 
     public event Action UpDateEnemySelect;
 
@@ -48,15 +47,6 @@ public class EnemyRockOn : MonoBehaviour
                 _enemyPoint.transform.position = new Vector3(_selectEnemy[_enemyIndex].transform.position.x,
                     _selectEnemy[_enemyIndex].transform.position.y + 3, _selectEnemy[_enemyIndex].transform.position.z);
             }
-            _index = _enemyIndex;
-        }
-    }
-
-    private void Update()
-    {
-        if (_selectEnemy.Count != 0 && BattleSelector._enemy)
-        {
-            _active = true;
         }
     }
 
